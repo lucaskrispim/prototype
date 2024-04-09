@@ -1,33 +1,27 @@
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class WarriorNPCTest {
 
     @Test
-    public void testCloneNotSameObject() {
-        WarriorNPC original = new WarriorNPC("Espada Longa");
-        WarriorNPC clone = (WarriorNPC) original.clone();
+    void testCloneIsDifferentInstance() throws CloneNotSupportedException {
+        Weapon weapon = new Weapon("Sword",10.0);
+        WarriorNPC originalWarrior = new WarriorNPC(weapon);
 
-        // Verifica se o objeto clonado não é o mesmo objeto que o original
-        assertNotSame(original, clone, "O objeto clonado não deve ser o mesmo que o original");
+        WarriorNPC clonedWarrior = originalWarrior.clone();
+
+        assertNotSame(originalWarrior, clonedWarrior);
     }
 
     @Test
-    public void testCloneSameWeapon() {
-        WarriorNPC original = new WarriorNPC("Espada Longa");
-        WarriorNPC clone = (WarriorNPC) original.clone();
+    void testCloneHasDeepCopyOfWeapon() throws CloneNotSupportedException {
+        Weapon weapon = new Weapon("Sword",10.0);
+        WarriorNPC originalWarrior = new WarriorNPC(weapon);
 
-        // Verifica se o objeto clonado tem o mesmo valor de arma que o original
-        assertEquals(original.getWeapon(), clone.getWeapon());
-    }
+        WarriorNPC clonedWarrior = originalWarrior.clone();
 
-    @Test
-    public void testConstructorInitialization() {
-        String weapon = "Espada Longa";
-        WarriorNPC warriorNPC = new WarriorNPC(weapon);
-
-        // Verifica se o construtor inicializa corretamente o atributo weapon
-        assertEquals( weapon, warriorNPC.getWeapon());
+        assertNotSame(originalWarrior.getWeapon(), clonedWarrior.getWeapon());
+        assertEquals(originalWarrior.getWeapon().getType(), clonedWarrior.getWeapon().getType());
+        assertEquals(originalWarrior.getWeapon().getDamage(), clonedWarrior.getWeapon().getDamage());
     }
 }

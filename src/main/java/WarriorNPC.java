@@ -1,25 +1,23 @@
-public class WarriorNPC implements NPCPrototype {
-    private String weapon;
+public class WarriorNPC implements Cloneable {
+    private Weapon weapon;
 
-    public String getWeapon() {
+    public Weapon getWeapon() {
         return weapon;
     }
 
-    public void setWeapon(String weapon) {
+    public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
     }
 
-    public WarriorNPC(String weapon) {
+    public WarriorNPC(Weapon weapon) {
         this.weapon = weapon;
     }
 
     @Override
-    public NPCPrototype clone() {
-        return new WarriorNPC(this.weapon);
+    public WarriorNPC clone() throws CloneNotSupportedException {
+        WarriorNPC warriorNPCClone = (WarriorNPC) super.clone();
+        warriorNPCClone.weapon = (Weapon) warriorNPCClone.weapon.clone();
+        return warriorNPCClone;
     }
 
-    @Override
-    public void displayInfo() {
-        System.out.println("Warrior with weapon: " + weapon);
-    }
 }
